@@ -55,10 +55,11 @@ class Kernel extends AspectKernel
         include FilterInjectorTransformer::rewrite($file);
     }
 
-    protected function registerTransformers(SourceTransformingLoader $sourceLoader)
+
+	protected function registerTransformers()
     {
         $sourceTransformers = array(
-            new FilterInjectorTransformer($this->options, $sourceLoader->getId()),
+            new FilterInjectorTransformer($this->options, SourceTransformingLoader::getId()),
             new BeforeMockTransformer(
                 $this,
                 new TokenReflection\Broker(
@@ -72,6 +73,7 @@ class Kernel extends AspectKernel
             new CachingTransformer($this, $sourceTransformers)
         );
     }
+
 }
 
 require __DIR__ . '/Intercept/before_mock.php';
